@@ -1,1 +1,51 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Stock Tickers
+	</title>
+</head>
+<body>
+<!-- 
+Python Part: 
+We will try to get data from the user's computer.
+- Find out what type is the user's computer 
+- Read in data from website, save to .csv (or just to memory?)
+	- do calculations, find values for table
+- 
+-->
+
+	Last Refresh: <!--python here--> (i.e. most recent update)
+	Today's Date: <!--python here-->
+	{% if ticker_data %}
+		<table>
+			<tr>  <!-- Table Row: numbers on top -->
+				<!-- Table Headers -->
+				<th>Stock Ticker:</th> 
+				<th>Price:</th>
+				<th>Percent chance of winning:</th>
+				<th>Percent chance of losing:</th>
+			</tr>
+		{% for ticker in ticker_data %}
+			<!-- <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> -->
+			<tr>
+				<td>{{ ticker.0 }}</td>
+				<td>{{ ticker.1 }}</td>
+				<td>{{ ticker.2 }}</td>
+				<td>{{ ticker.3 }}</td>   <!-- has to be }}, not %}; and also . for lookup, not [i] -->
+			</tr>
+		{% endfor %}
+			<tr>
+				<!-- TEST -->
+				<td>AAPL</td>
+				<td>$50.06</td>
+				<td>58.39</td>
+				<td>41.61</td>
+			</tr>
+		</table>
+	{% else %}
+		<p>No data is available.</p>
+	{% endif %}
+</body>
+</html>
