@@ -10,8 +10,6 @@ def create_folders_by_system():
     elif sys.platform.startswith('darwin'):
         create_new_desktop_folder_mac()
 
-
-
 # the following creates new folder and its subfolders on user desktop for windows OS
 def create_new_desktop_folder_windows():
 
@@ -37,7 +35,7 @@ def create_subfolders_windows(path):
             print(f[1:] + ' already exists')
 
 
-# the following creates new folder on user desktop for mac OS
+# the following creates new folder and its subfolders on user desktop for mac OS
 def create_new_desktop_folder_mac():
     home = os.path.expanduser("~")
     #print(home)
@@ -50,7 +48,7 @@ def create_new_desktop_folder_mac():
         print("Created StockData Folder")
     create_subfolders_mac(path)
 
-# the following creates 3 subfolders for Mac OS
+# the following creates 3 subfolders for mac OS
 def create_subfolders_mac(path):
     subfolders = ['/OHLC', '/Earnings', '/Merged']
 
@@ -62,5 +60,5 @@ def create_subfolders_mac(path):
 
 
 
-
+# running the actual command
 create_folders_by_system()
