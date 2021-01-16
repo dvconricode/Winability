@@ -8,5 +8,12 @@ if sys.platform.startswith('win32'):
     file.close()
 
 elif sys.platform.startswith('darwin'):
-    file = open(os.path.expanduser('~/Desktop/stock_tickers.csv'), 'x')
-    file.close()
+    home = os.path.expanduser("~")
+    print(home)
+    if os.path.exists(home+'/Desktop/StockData'):
+        print("exist")
+    else:
+        print("gotta Create")
+        os.makedirs(home+'/Desktop/StockData')
+    #file = open(os.path.expanduser('~/Desktop/stock_tickers.csv'), 'x')
+    #file.close()
