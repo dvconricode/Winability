@@ -1,4 +1,4 @@
-div{
+.box{
     border:  1px solid black;
 }
 
@@ -8,4 +8,8 @@ div{
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 100px 100px 100px;
+}
+
+.center{
+	text-align: center;
 }
