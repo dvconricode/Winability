@@ -12,8 +12,13 @@ def create_new_csv():
         file.close()
 
     elif sys.platform.startswith('darwin'):
-        file = open(os.path.expanduser('~/Desktop/stock_tickers.csv'), 'x')
-        file.close()
+        home = os.path.expanduser("~")
+        print(home)
+        if os.path.exists(home + '/Desktop/StockData'):
+            return True
+        else:
+            os.makedirs(home + '/Desktop/StockData')
+            return False
 
 
 # the following if creates new folder on user desktop for windows OS
