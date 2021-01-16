@@ -1,0 +1,54 @@
+.box{
+    border:  1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6699ff;
+}
+
+.grid{
+    display: grid;
+    max-width: 500px;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 100px 100px 100px;
+}
+
+.center{
+	text-align: center;
+	vertical-align: center;
+}
+
+.centerdiv{
+	margin: auto;
+	width: 50%;
+}
+
+.time{
+	height: 100 px;
+	width: 50%;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+}
+
+h1 {
+	color: green;
+	font-weight: bold;
+	font-size: 64px;
+}
+
+body{
+	background: white url("images/food.gif") no-repeat;
+}
+
+.why {
+	color: white;
+	font-weight: bold;
+	font-size: 50px;
+}
