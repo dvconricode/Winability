@@ -1,5 +1,8 @@
 .box{
     border:  1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .grid{
@@ -12,6 +15,7 @@
 
 .center{
 	text-align: center;
+	vertical-align: center;
 }
 
 h1{
