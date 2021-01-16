@@ -1,0 +1,48 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'displaytable/style.css' %}">
+<!-- ^^^ added for django -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackDavis 2021</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body>
+
+    <div style="background: url(images/food.gif); background-size: contain; background-repeat: no-repeat; width: 1000px; height: 530px; margin: 0 auto; display: grid;" >
+                <div class="container why" style="place-self: center;">
+                    <h1>Market Watch</h1>
+                </div>
+    </div>
+
+    <div class="centerdiv" style="width: 470px;">
+        <div>
+          <p class="alignleft">Time: 00:00</p>
+          <p class="alignright">Last Updated: 00:00</p>
+        </div>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div class="grid" style="width: 500px;">
+        <div class="box">Ticker</div>
+        <div class="box">Share Price</div>
+        <div class="box">Win Percentage</div>
+
+        <div class="box">AAPL</div>
+        <div class="box">$200</div>
+        <div class="box">%30</div>
+
+        <div class="box">GOOG</div>
+        <div class="box">$300</div>
+        <div class="box">%40</div>
+        </div>
+    </div>
+</body>
+
+</html>
