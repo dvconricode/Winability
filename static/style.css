@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #6699ff;
 }
 
 .grid{
@@ -18,8 +19,30 @@
 	vertical-align: center;
 }
 
+.centerdiv{
+	margin: auto;
+	width: 50%;
+}
+
+.time{
+	height: 100 px;
+	width: 50%;
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+}
+
 h1{
 	color: white;
 	font-weight: bold;
 	font-size: 64px;
+}
+
+body{
+	background-color: white;
 }
