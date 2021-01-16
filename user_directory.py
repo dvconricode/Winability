@@ -21,7 +21,7 @@ def create_new_desktop_folder_windows():
     else:
         print('File already exists')
 
-    create_subfolders(new_path)
+    create_subfolders_windows(new_path)
 
 
 # the following creates new folder on user desktop for mac OS
@@ -35,7 +35,8 @@ def create_new_desktop_folder_mac():
         print("Created")
 
 
-def create_subfolders(path):
+# the following creates 3 subfolders for windows OS
+def create_subfolders_windows(path):
     subfolders = [r'\OHLC', r'\Earnings', r'\Merged']
 
     for f in subfolders:
