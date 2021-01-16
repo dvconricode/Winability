@@ -5,7 +5,7 @@ import sys
 
 # the following if creates new folder on user desktop for windows OS
 
-def create_new_desktop_folder():
+def create_new_desktop_folder_windows():
 
     if sys.platform.startswith('win32'):
         desktop_path = os.path.join(os.environ['USERPROFILE'], 'Desktop')
