@@ -7,6 +7,8 @@ import pandas as pd
 from datetime import date
 from pandas_datareader import data as pdr
 import requests
+import math
+import matplotlib.pyplot as plt
 from configinfo import client_id
 from scipy.stats import norm
 
@@ -314,6 +316,7 @@ def get_prob_with_graph(ticker):
     print("The probability of the trade is: " +str(probability))
 
     return probability
+
 # running the following shows a normal distribution curve with the cdf of x shaded in
 def normal_distribution_curve(mean, std, x):
 
@@ -345,6 +348,7 @@ def get_historic_PE_max(ticker):
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     maxPE = np.max(data['PE_ratio'])
     print(maxPE)
+
     return maxPE
 
 # Debug purposes grab minimum historic PE
@@ -360,6 +364,7 @@ def get_historic_PE_min(ticker):
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     minPE = np.min(data['PE_ratio'])
     print(minPE)
+
     return minPE
 
 
@@ -377,11 +382,16 @@ def initial_program_run():
     #START WITH INITIALIZING FOLDERS
     create_folders_by_system()
     #CREATE FOR LOOP TO ITERATE OVER THE TICKERS
-    setup_data(ticker)
-    get_prob_without_graph(ticker)
+    starting_tickers = open('StartingTickers.txt', 'r')
+    ticker_list = []
+    for line in starting_tickers:
+        ticker_list.append(line.strip())
+        setup_data(ticker)
+        get_prob_without_graph(ticker)
     #Save the results either in a list or strings 
     ## things that are relevant 'ticker name','lastprice', 'probability'
 
+    return ticker_list
 
 ### Commands to Run
 #create_folders_by_system()
