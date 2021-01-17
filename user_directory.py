@@ -388,8 +388,8 @@ def initial_program_run():
     ticker_list = []
     for line in starting_tickers:
         ticker_list.append(line.strip())
-        setup_data(ticker)
-        get_prob_without_graph(ticker)
+        #setup_data(ticker)
+        #get_prob_without_graph(ticker)
     #Save the results either in a list or strings 
     ## things that are relevant 'ticker name','lastprice', 'probability'
 
