@@ -9,6 +9,8 @@ from pandas_datareader import data as pdr
 import requests
 from configinfo import client_id
 from scipy.stats import norm
+import math
+import matplotlib.pyplot as plt
 
 macslash = '/'
 windowslash = r'\\'
@@ -258,7 +260,7 @@ def get_historic_PE_mean(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     mean = np.mean(data['PE_ratio'])
-    print("this is the mean: ")
+    print("this is the mean: "+ str(mean))
 
     return mean
 
@@ -274,7 +276,7 @@ def get_historic_PE_std(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     std = np.std(data['PE_ratio'])
-    print("this is the std: ")
+    print("this is the std: " + str(std))
 
     return std
 
@@ -293,9 +295,9 @@ def get_latest_PE(ticker):
 # run norm.cdf(x,mean,std) to get the cdf probability
 def get_prob_without_graph(ticker):
     historic_PE_mean = get_historic_PE_mean(ticker)
-    print(historic_PE_mean)
+    #print(historic_PE_mean)
     historic_PE_std = get_historic_PE_std(ticker)
-    print(historic_PE_std)
+    #print(historic_PE_std)
     latest_PE = get_latest_PE(ticker)
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
@@ -312,6 +314,7 @@ def get_prob_with_graph(ticker):
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
     print("The probability of the trade is: " +str(probability))
+    normal_distribution_curve(historic_PE_mean,historic_PE_std,latest_PE)
 
     return probability
 # running the following shows a normal distribution curve with the cdf of x shaded in
@@ -385,6 +388,7 @@ def initial_program_run():
 
 ### Commands to Run
 #create_folders_by_system()
-#setup_data('AAPL')
+setup_data('EGOV')
 #get_prob_without_graph('AAPL')
-initial_program_run()
+#initial_program_run()
+get_prob_with_graph('EGOV')
