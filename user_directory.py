@@ -143,6 +143,8 @@ def grab_historical_EPS(ticker):
     return data
 
 
+# this function reads in OHLC and earnings, loops through columns of OHLC creating a new series with a date index.
+# if market data date is less than the eps date then assign EPS
 def merge_OHLC_EPS(ticker):
     ohlc_dir = subfolder_dir('OHLC')
     earnings_dir = subfolder_dir('Earnings')
@@ -177,6 +179,24 @@ def merge_OHLC_EPS(ticker):
     ohlc_data.to_csv(filepath3, index=False)                # create a new ohlc_data
 
     return ohlc_data
+
+
+# the following calculates the PE ratio
+def calc_PE(ticker):
+    merged_dir = subfolder_dir('Merged')
+
+    if sys.platform.startswith('win32'):                                                # get the filename
+        filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
+
+    file = pd.read_csv(filename)                                                        # get the file
+    file['EPS'] = file['EPS'].str.replace('$', '')
+    file['EPS'] = file.EPS.astype(float)
+    file['PE_ratio'] = file['Adj Close']/file['EPS']
+    file.to_csv(filename, index=False)                                                 # replacing the previous file.
+
+    return file
 
 
 # create_folders_by_system()
