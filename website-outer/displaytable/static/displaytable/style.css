@@ -62,3 +62,12 @@ body{
     position: fixed;
     bottom: 0;
 }
+
+.search {
+	padding-top: 20px;
+}
+
+input[type=text] {
+	border: 2px green;
+	border-radius: 4px;
+}
