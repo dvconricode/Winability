@@ -2,6 +2,7 @@
 import os
 import sys
 import yfinance as fyf
+import numpy as np
 import pandas as pd
 from datetime import date
 from pandas_datareader import data as pdr
@@ -87,7 +88,6 @@ def subfolder_dir(subfolder):
 
 
 Today = date.today()
-print(Today)
 
 
 def grab_OHLC_to_csv(ticker):
@@ -103,5 +103,21 @@ def grab_OHLC_to_csv(ticker):
     data.to_csv(filename, index=True)
 
 
+def calc_Vol(ticker):
+    ohlc_dir = subfolder_dir('OHLC')
+
+    if sys.platform.startswith('win32'):
+        filename = ohlc_dir + '{}'.format(windowslash) + ticker + '_ohlc.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = ohlc_dir + '{}'.format(macslash) + ticker + '_ohlc.csv'
+
+    file = pd.read_csv(filename)
+    file['Volatility'] = file['Adj Close'].rolling(window=30, center=False).std()*np.sqrt(252)
+    file.to_csv(filename, index=True)                                               # replacing the previous file.
+
+    return file
+
+
 create_folders_by_system()
 grab_OHLC_to_csv('AAPL')
+calc_Vol('AAPL')
