@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tickers (HD-21)</title>
+    <title>How Should I Invest? (HD-21)</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 
@@ -29,12 +29,13 @@
         <input type="submit" value="{{ 'AAPL' }}">
     </form>
     -->
-
-     <form action="search" method="post">
-        {% csrf_token %}
-        <input type="text" value="{{ ticker }}" name="ticker">
-        <input type="submit" value="Search">
-    </form>
+    <div class="container why search" style="place-self: center; margin-top: 180px;">
+         <form action="search" method="post">
+            {% csrf_token %}
+            <input type="text" value="{{ ticker }}" name="ticker">
+            <input type="submit" value="Search">
+        </form>
+    </div>
 
 
 
