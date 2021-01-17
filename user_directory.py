@@ -300,7 +300,26 @@ def get_prob(ticker):
     print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
     print(probability)
+
     return probability
+
+# running the following shows a normal distribution curve with the cdf of x shaded in
+def normal_distribution_curve(mean, std, x):
+
+    # Creating the distribution
+
+    start = math.floor(mean - (3 * std))
+    stop = math.ceil(mean + (3 * std))
+    data = np.arange(start, stop + 1, 0.01)
+    pdf = norm.pdf(data, loc=mean, scale=std)               # loc is the mean, scale is the standard deviation
+
+    # Visualizing the distribution
+
+    plt.plot(data, pdf, color='black')
+    plt.fill_between(data, pdf, 0, where=(data <= x), color='blue')
+    plt.xlabel('PE ratio')
+    plt.ylabel('probability density')
+    plt.show()
 
 # create all the necessary files as well as calculate important columns
 def setup_data(ticker):
