@@ -331,7 +331,8 @@ def normal_distribution_curve(mean, std, x):
     # Visualizing the distribution
 
     plt.plot(data, pdf, color='black')
-    plt.fill_between(data, pdf, 0, where=(data <= x), color='red')
+    plt.fill_between(data, pdf, 0, where=(data <= x), color='#f59592')
+    plt.fill_between(data, pdf, 0, where=(data > x), color='#97f4a6')
     plt.xlabel('PE ratio')
     plt.ylabel('probability density')
     plt.show()
