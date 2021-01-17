@@ -1,3 +1,6 @@
+html{
+	background-color: black;
+}
 .box{
     border:  1px solid black;
     display: flex;
@@ -10,7 +13,7 @@
     display: grid;
     max-width: 600px;
     margin: 0 auto;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-template-rows: 100px 100px 100px 100px;
 }
 
@@ -22,6 +25,7 @@
 .centerdiv{
 	margin: auto;
 	width: 50%;
+	padding-top: 25px;
 }
 
 .time{
@@ -51,4 +55,10 @@ body{
 	color: white;
 	font-weight: bold;
 	font-size: 50px;
+}
+
+
+.bottom {
+    position: fixed;
+    bottom: 0;
 }
