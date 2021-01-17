@@ -20,27 +20,18 @@
                 </div>
     </div>
 
-
-    <!-- ticker search form -->
-    <form action="/search/" method="post">
-        {% csrf_token %}
-        { form }}
-        <input type="submit" value="Submit">
-    </form>
-
-
-
-
-
-
     <div>
-        
+        <form action="/search/" method="post">
+            <input id="query" type="text" query="my query">
+            <input type="submit" value="Submit">
+        </form>
     </div>
+
     {% if other_data %}
     <div class="centerdiv" style="width: 470px;">
         <div>
           <p class="alignleft" style="color: white;">Time: {{ other_data.0 }}</p>
-          <p class="alignright" style="color: white;">Last Updated: N/A</p>
+          <p class="alignright" style="color: white;">Previously updated: N/A</p>
         </div>
     </div>
     {% endif %}
