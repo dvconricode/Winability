@@ -244,8 +244,14 @@ def get_latestEPS(ticker):
     return latestEPS
 
 
-
-
+def get_prob(ticker):
+    #create_folders_by_system()
+    #grab_OHLC_to_csv('AAPL')
+    #calc_Vol('AAPL')
+    #grab_historical_EPS('AAPL')
+    #merge_OHLC_EPS('AAPL')
+    #calc_PE('AAPL')
+    get_lastPrice(symbol=['AAPL'])
 #create_folders_by_system()
 #grab_OHLC_to_csv('AAPL')
 #calc_Vol('AAPL')
@@ -254,3 +260,11 @@ def get_latestEPS(ticker):
 #calc_PE('AAPL')
 get_lastPrice(symbol=['AAPL'])
 get_latestEPS('AAPL')
+
+
+
+# calculates current PE 
+# calculate the mean of PE
+# calculate the std of PE
+# from scipy.stats import norm
+## print(norm.cdf(x, mean, std))
