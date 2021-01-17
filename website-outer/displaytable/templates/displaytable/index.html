@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackDavis 2021</title>
+    <title>Stock Tickers (HD-21)</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 
@@ -20,29 +20,37 @@
                 </div>
     </div>
 
+    <div>
+        
+    </div>
+    {% if other_data %}
     <div class="centerdiv" style="width: 470px;">
         <div>
-          <p class="alignleft">Time: 00:00</p>
-          <p class="alignright">Last Updated: 00:00</p>
+          <p class="alignleft">Time: {{ other_data.0 }}</p>
+          <p class="alignright">Last Updated: N/A</p>
         </div>
     </div>
+    {% endif %}
 
+    {% if ticker_data %}
     <div style="clear: both;"></div>
-
-    <div class="grid" style="width: 500px;">
-        <div class="box">Ticker</div>
-        <div class="box">Share Price</div>
-        <div class="box">Win Percentage</div>
-
-        <div class="box">AAPL</div>
-        <div class="box">$200</div>
-        <div class="box">%30</div>
-
-        <div class="box">GOOG</div>
-        <div class="box">$300</div>
-        <div class="box">%40</div>
+        <div class="grid" style="width: 600px; height: 200px">
+            <div class="box">Ticker</div>
+            <div class="box">Share Price</div>
+            <div class="box">Win Percentage</div>
+            <div class="box">Loss Percentage</div>
+            {% for ticker in ticker_data %}
+                <div class="box">{{ ticker.0 }}</div>
+                <div class="box">${{ ticker.1 }}</div>
+                <div class="box">{{ ticker.2 }}%</div>
+                <div class="box">{{ ticker.3 }}%</div>
+            {% endfor %}
         </div>
+
     </div>
+    {% else %}
+        <p>No data is available.</p>
+    {% endif %}
 </body>
 
 </html>
