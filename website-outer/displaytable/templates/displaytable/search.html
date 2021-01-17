@@ -20,19 +20,6 @@
                 </div>
     </div>
 
-
-    <!-- ticker search form -->
-    <form action="/search/" method="post">
-        {% csrf_token %}
-        { form }}
-        <input type="submit" value="Submit">
-    </form>
-
-
-
-
-
-
     <div>
         
     </div>
@@ -65,9 +52,10 @@
     {% else %}
         <p>No data is available!</p>
     {% endif %}
+    <a href="index.html">
     <p class="bottom" style="color: ffffff; font-size: 16px">
-        (for new data, refresh the page)
-    </p>
+        (return to front page)
+    </p></a>
 </body>
 
 </html>

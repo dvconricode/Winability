@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-
 import time
+
+from .forms import TickerForm
 
 # Create your views here.
 
@@ -18,3 +19,14 @@ def index(request):
 	template = loader.get_template('displaytable/index.html')
 	context = {"other_data":other_data, "ticker_data":ticker_data}
 	return HttpResponse(template.render(context, request))
+
+
+
+def get_ticker(request):
+	if request.method == 'POST':
+		form = TickerForm(request.POST)
+		if form.is_valid():
+			template = loader.get_template('displaytable/search.html')
+			context={"ticker": form} #gotta get the ticker from the form
+			
+			return HttpResponse(template.render(context, request))
