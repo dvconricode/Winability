@@ -121,3 +121,5 @@ def calc_Vol(ticker):
 create_folders_by_system()
 grab_OHLC_to_csv('AAPL')
 calc_Vol('AAPL')
+
+#writing next method
