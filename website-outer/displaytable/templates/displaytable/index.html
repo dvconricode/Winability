@@ -26,8 +26,8 @@
     {% if other_data %}
     <div class="centerdiv" style="width: 470px;">
         <div>
-          <p class="alignleft">Time: {{ other_data.0 }}</p>
-          <p class="alignright">Last Updated: N/A</p>
+          <p class="alignleft" style="color: white;">Time: {{ other_data.0 }}</p>
+          <p class="alignright" style="color: white;">Last Updated: N/A</p>
         </div>
     </div>
     {% endif %}
@@ -35,10 +35,10 @@
     {% if ticker_data %}
     <div style="clear: both;"></div>
         <div class="grid" style="width: 600px; height: 200px">
-            <div class="box">Ticker</div>
-            <div class="box">Share Price</div>
-            <div class="box">Win Percentage</div>
-            <div class="box">Loss Percentage</div>
+            <div class="box"><b>Ticker</b></div>
+            <div class="box"><b>Share Price</b></div>
+            <div class="box"><b>Win Percentage</b></div>
+            <div class="box"><b>Loss Percentage</b></div>
             {% for ticker in ticker_data %}
                 <div class="box">{{ ticker.0 }}</div>
                 <div class="box">${{ ticker.1 }}</div>
@@ -48,9 +48,13 @@
         </div>
 
     </div>
+
     {% else %}
-        <p>No data is available.</p>
+        <p>No data is available!</p>
     {% endif %}
+    <p class="bottom" style="color: ffffff; font-size: 16px">
+        (for new data, refresh the page)
+    </p>
 </body>
 
 </html>
