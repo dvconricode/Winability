@@ -8,10 +8,10 @@
 
 .grid{
     display: grid;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100px 100px 100px 100px;
 }
 
 .center{
@@ -44,7 +44,7 @@ h1 {
 }
 
 body{
-	background: white url("images/food.gif") no-repeat;
+	background: url("images/food.gif") no-repeat; background-position: center; width: 1000px; height: 530px; margin: 0 auto; display: grid;
 }
 
 .why {
