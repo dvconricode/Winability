@@ -199,7 +199,7 @@ def calc_PE(ticker):
     return file
 
 
-# create_folders_by_system()
-# grab_OHLC_to_csv('AAPL')
-# calc_Vol('AAPL')
+create_folders_by_system()
+grab_OHLC_to_csv('AAPL')
+calc_Vol('AAPL')
 
