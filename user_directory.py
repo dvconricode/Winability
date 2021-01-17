@@ -182,7 +182,7 @@ def merge_OHLC_EPS(ticker):
     return ohlc_data
 
 
-# Calculates dailyPE ratio in the Merged file
+# Calculates daily PE ratio in the Merged file
 def calc_PE(ticker):
     merged_dir = subfolder_dir('Merged')
 
@@ -302,7 +302,7 @@ def get_prob(ticker):
     print(probability)
     return probability
 
-# create all the necessary files as well as calculate 
+# create all the necessary files as well as calculate important columns
 def setup_data(ticker):
     grab_OHLC_to_csv(ticker)
     calc_Vol(ticker)
