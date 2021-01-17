@@ -8,25 +8,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tickers (HD-21)</title>
+    <title>Search Results (HD-21)</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 
 <body>
 
     <div style="background: url(images/food.gif); background-size: contain; background-repeat: no-repeat; width: 1000px; height: 530px; margin: 0 auto; display: grid;" >
-
-
                 <div class="container why" style="place-self: center;">
                     <h1>Market Watch</h1>
                 </div>
-                <div class="container why search" style="place-self: center; margin-top: 180px;">
-                     <form action="search" method="post">
-                        {% csrf_token %}
-                        <input type="text" value="{{ ticker }}" name="ticker">
-                        <input type="submit" value="Find Ticker">
-                    </form>
-                </div>
+    </div>
+
+    <div class="container why search" style="place-self: center; margin-top: 180px;">
+        <form action="search" method="post">
+            {% csrf_token %}
+            <input type="text" value="{{ ticker }}" name="ticker">
+            <input type="submit" value="Find Ticker">
+        </form>
     </div>
 
     <div>
@@ -51,19 +50,14 @@
             <div class="box"><b>Share Price</b></div>
             <div class="box"><b>Win Percentage</b></div>
             <div class="box"><b>Loss Percentage</b></div>
-            {% for ticker in ticker_data %}
-                <div class="box">{{ ticker.0 }}</div>
-                <div class="box">${{ ticker.1 }}</div>
-                <div class="box">{{ ticker.2 }}%</div>
-                <div class="box">{{ ticker.3 }}%</div>
-            {% endfor %}
+            <!-- Only one result -->
+            <div class="box">{{ ticker_data.0 }}</div>
+            <div class="box">${{ ticker_data.1 }}</div>
+            <div class="box">{{ ticker_data.2 }}%</div>
+            <div class="box">{{ ticker_data.3 }}%</div>
         </div>
 
     </div>
-
-    
-
-
 
     {% else %}
         <p>No data is available!</p>
