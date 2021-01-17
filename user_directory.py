@@ -11,8 +11,6 @@ import math
 import matplotlib.pyplot as plt
 from configinfo import client_id
 from scipy.stats import norm
-import math
-import matplotlib.pyplot as plt
 
 macslash = '/'
 windowslash = r'\\'
