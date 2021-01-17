@@ -227,6 +227,22 @@ def get_lastPrice(**kwargs):
         print(data[symbol]['lastPrice'])
 
 
+# get latest EPS from EPS file
+def get_latestEPS(ticker):
+    earnings_dir = subfolder_dir('Earnings')
+
+    if sys.platform.startswith('win32'):
+        filename = earnings_dir + '{}'.format(windowslash) + ticker + '_eps.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = earnings_dir + '{}'.format(macslash) + ticker + '_eps.csv'
+
+    data = pd.read_csv(filename)
+    latestEPS = data['TTM_Net_EPS'][data.index[-1]] #grabs latest EPS from the already created File
+    latestEPS = float(latestEPS.replace('$', ''))
+    #print(latestEPS)
+    #print(type(latestEPS))
+    return latestEPS
+
 
 
 
@@ -237,3 +253,4 @@ def get_lastPrice(**kwargs):
 #merge_OHLC_EPS('AAPL')
 #calc_PE('AAPL')
 get_lastPrice(symbol=['AAPL'])
+get_latestEPS('AAPL')
