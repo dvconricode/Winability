@@ -98,9 +98,10 @@ def grab_OHLC_to_csv(ticker):
     elif sys.platform.startswith('darwin'):
         filename = ohlc_dir + '{}'.format(macslash) + ticker + '_ohlc.csv'
 
-    data = pdr.get_data_yahoo(ticker, start='1950-1-1', end=Today)
+    data = pdr.get_data_yahoo(ticker, start='1970-1-1', end=Today)
     data.dropna(inplace=True)
     data.to_csv(filename, index=True)
 
 
 create_folders_by_system()
+grab_OHLC_to_csv('AAPL')
