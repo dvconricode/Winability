@@ -1,6 +1,7 @@
 
 import os
 import sys
+import csv
 import yfinance as fyf
 import numpy as np
 import pandas as pd
@@ -244,23 +245,50 @@ def get_latestEPS(ticker):
     return latestEPS
 
 
-def get_prob(ticker):
-    #create_folders_by_system()
-    #grab_OHLC_to_csv('AAPL')
-    #calc_Vol('AAPL')
-    #grab_historical_EPS('AAPL')
-    #merge_OHLC_EPS('AAPL')
-    #calc_PE('AAPL')
-    get_lastPrice(symbol=['AAPL'])
-#create_folders_by_system()
-#grab_OHLC_to_csv('AAPL')
-#calc_Vol('AAPL')
-#grab_historical_EPS('AAPL')
-#merge_OHLC_EPS('AAPL')
-#calc_PE('AAPL')
-get_lastPrice(symbol=['AAPL'])
-get_latestEPS('AAPL')
+#calculate current PE - curr share price / last eps
+def get_curr_pe(ticker):
+    return None
 
+def get_prob(ticker):
+    create_folders_by_system()
+    grab_OHLC_to_csv(ticker)
+    calc_Vol(ticker)
+    grab_historical_EPS(ticker)
+    merge_OHLC_EPS(ticker)
+    calc_PE(ticker)
+    get_lastPrice(symbol=[ticker])
+
+
+def get_allMeans(csv, ticker):
+    readdata = csv.reader(open('C:\\desktop\\StockData\\{}merged.csv'.f(ticker), 'r'))
+    data = []
+
+    for row in readdata:
+      data.append(row)
+
+    #incase you have a header/title in the first row of your csv file, do the next line else skip it
+    data.pop(0) 
+
+    q1 = []  
+
+    for i in range(len(data)):
+      q1.append(int(data[i][your_column_number]))
+
+    print ('Mean of your_column_number :            ', (np.mean(q1)))
+
+
+calc_Vol('TSLA')
+
+'''
+create_folders_by_system()
+grab_OHLC_to_csv('TSLA')
+calc_Vol('TSLA')
+grab_historical_EPS('TSLA')
+merge_OHLC_EPS('TSLA')
+calc_PE('TSLA')
+get_lastPrice(symbol=['TSLA'])
+get_latestEPS('TSLA')
+'''
 
 
 # calculates current PE 
@@ -268,3 +296,6 @@ get_latestEPS('AAPL')
 # calculate the std of PE
 # from scipy.stats import norm
 ## print(norm.cdf(x, mean, std))
+
+#calc_PE('TSLA')
+
