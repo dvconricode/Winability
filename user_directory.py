@@ -1,7 +1,6 @@
 
 import os
 import sys
-import csv
 import yfinance as fyf
 import numpy as np
 import pandas as pd
@@ -89,10 +88,8 @@ def subfolder_dir(subfolder):
 
     return subfolder_path
 
-
 Today = date.today()
-
-
+# Grab historical data from yahoo finance
 def grab_OHLC_to_csv(ticker):
     ohlc_dir = subfolder_dir('OHLC')
 
@@ -105,7 +102,7 @@ def grab_OHLC_to_csv(ticker):
     data.dropna(inplace=True)
     data.to_csv(filename, index=True)
 
-
+# Calculate volatility in the previous created OHLC csv file
 def calc_Vol(ticker):
     ohlc_dir = subfolder_dir('OHLC')
 
@@ -120,7 +117,7 @@ def calc_Vol(ticker):
 
     return file
 
-
+# Grab Earnings from Macrotrends
 def grab_historical_EPS(ticker):
     source = pd.read_html('https://www.macrotrends.net/stocks/charts/' + ticker + '/' + ticker +'/pe-ratio')    # source of the ticker
 
@@ -146,8 +143,9 @@ def grab_historical_EPS(ticker):
     return data
 
 
-# this function reads in OHLC and earnings, loops through columns of OHLC creating a new series with a date index.
-# if market data date is less than the eps date then assign EPS
+# This function reads in OHLC and earnings, loops through columns of OHLC creating a new series with a date index.
+# If market data date is less than the eps date then assign EPS
+# Creates Merged file
 def merge_OHLC_EPS(ticker):
     ohlc_dir = subfolder_dir('OHLC')
     earnings_dir = subfolder_dir('Earnings')
@@ -184,7 +182,7 @@ def merge_OHLC_EPS(ticker):
     return ohlc_data
 
 
-# the following calculates the PE ratio
+# Calculates daily PE ratio in the Merged file
 def calc_PE(ticker):
     merged_dir = subfolder_dir('Merged')
 
@@ -205,7 +203,7 @@ def calc_PE(ticker):
     return file
 
 
-# TDAmeritrade API 
+# TDAmeritrade API base code to get it to work
 def get_quotes(**kwargs):
     
     url = 'https://api.tdameritrade.com/v1/marketdata/quotes'
@@ -222,7 +220,7 @@ def get_quotes(**kwargs):
     return requests.get(url,params=params).json()
 
 
-## method to get lastprice of stock
+## Method to get lastprice of stock
 def get_lastPrice(**kwargs):
     data = get_quotes(symbol=kwargs.get('symbol'))
     for symbol in kwargs.get('symbol'):
@@ -230,7 +228,6 @@ def get_lastPrice(**kwargs):
         #print(data[symbol]['lastPrice'])
 
         return data[symbol]['lastPrice']
-
 
 # get latest EPS from EPS file
 def get_latestEPS(ticker):
@@ -249,34 +246,7 @@ def get_latestEPS(ticker):
 
     return latestEPS
 
-
-<<<<<<< HEAD
-#calculate current PE - curr share price / last eps
-def get_curr_pe(ticker):
-    return None
-
-def get_prob(ticker):
-    create_folders_by_system()
-    grab_OHLC_to_csv(ticker)
-    calc_Vol(ticker)
-    grab_historical_EPS(ticker)
-    merge_OHLC_EPS(ticker)
-    calc_PE(ticker)
-    get_lastPrice(symbol=[ticker])
-
-
-def get_allMeans(csv, ticker):
-    readdata = csv.reader(open('C:\\desktop\\StockData\\{}merged.csv'.f(ticker), 'r'))
-    data = []
-
-    for row in readdata:
-      data.append(row)
-
-    #incase you have a header/title in the first row of your csv file, do the next line else skip it
-    data.pop(0) 
-
-    q1 = []  
-=======
+# get historic PE mean from the Merged file
 def get_historic_PE_mean(ticker):
     merged_dir = subfolder_dir('Merged')
 
@@ -288,43 +258,14 @@ def get_historic_PE_mean(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     mean = np.mean(data['PE_ratio'])
-    print(mean)
+    #print(mean)
 
     return mean
->>>>>>> 1f068eee57a984eecee1839814031922d09b2ffb
 
-    for i in range(len(data)):
-      q1.append(int(data[i][your_column_number]))
-
-    print ('Mean of your_column_number :            ', (np.mean(q1)))
-
-
-calc_Vol('TSLA')
-
-'''
-create_folders_by_system()
-grab_OHLC_to_csv('TSLA')
-calc_Vol('TSLA')
-grab_historical_EPS('TSLA')
-merge_OHLC_EPS('TSLA')
-calc_PE('TSLA')
-get_lastPrice(symbol=['TSLA'])
-get_latestEPS('TSLA')
-'''
-
+# get historic PE std from the Merged file
 def get_historic_PE_std(ticker):
     merged_dir = subfolder_dir('Merged')
 
-<<<<<<< HEAD
-# calculates current PE 
-# calculate the mean of PE
-# calculate the std of PE
-# from scipy.stats import norm
-## print(norm.cdf(x, mean, std))
-
-#calc_PE('TSLA')
-
-=======
     if sys.platform.startswith('win32'):
         filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
     elif sys.platform.startswith('darwin'):
@@ -333,35 +274,64 @@ def get_historic_PE_std(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     std = np.std(data['PE_ratio'])
-    print(std)
+    #print(std)
 
     return std
 
-
+# calculates the latest PE by using the get_lastPrice() and get_latestEPS() functions
 def get_latest_PE(ticker):
     latest_price = get_lastPrice(symbol=[ticker])
-    print(latest_price)
+    #print(latest_price)
     latest_earnings = get_latestEPS(ticker)
-    print(latest_earnings)
+    #print(latest_earnings)
     latest_PE = latest_price/latest_earnings
-    print(latest_PE)
+    #print(latest_PE)
 
     return latest_PE
 
-
+# utilizes get_historic_PE_mean(), get_historic_PE_std(), and get_latest_PE() functions to get required (x,mean,std)
+# run norm.cdf(x,mean,std) to get the cdf probability
 def get_prob(ticker):
-    pass
+    historic_PE_mean = get_historic_PE_mean('HIMX')
+    print(historic_PE_mean)
+    historic_PE_std = get_historic_PE_std('HIMX')
+    print(historic_PE_std)
+    latest_PE = get_latest_PE('HIMX')
+    print(latest_PE)
+    probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
+    print(probability)
+
+    return probability
+
+# running the following shows a normal distribution curve with the cdf of x shaded in
+def normal_distribution_curve(mean, std, x):
+
+    # Creating the distribution
+
+    start = math.floor(mean - (3 * std))
+    stop = math.ceil(mean + (3 * std))
+    data = np.arange(start, stop + 1, 0.01)
+    pdf = norm.pdf(data, loc=mean, scale=std)               # loc is the mean, scale is the standard deviation
+
+    # Visualizing the distribution
+
+    plt.plot(data, pdf, color='black')
+    plt.fill_between(data, pdf, 0, where=(data <= x), color='blue')
+    plt.xlabel('PE ratio')
+    plt.ylabel('probability density')
+    plt.show()
+
+# create all the necessary files as well as calculate important columns
+def setup_data(ticker):
+    grab_OHLC_to_csv(ticker)
+    calc_Vol(ticker)
+    grab_historical_EPS(ticker)
+    merge_OHLC_EPS(ticker)
+    calc_PE(ticker)
+    get_latestEPS(ticker)
 
 
-## STEPS
-#create_folders_by_system()
-grab_OHLC_to_csv('HIMX')
-calc_Vol('HIMX')
-grab_historical_EPS('HIMX')
-merge_OHLC_EPS('HIMX')
-calc_PE('HIMX')
-get_latestEPS('HIMX')
-get_historic_PE_mean('HIMX')
-get_historic_PE_std('HIMX')
-get_latest_PE('HIMX')
->>>>>>> 1f068eee57a984eecee1839814031922d09b2ffb
+## Commands to Run
+create_folders_by_system()
+setup_data('HIMX')
+get_prob('HIMX')
