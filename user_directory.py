@@ -8,6 +8,7 @@ from datetime import date
 from pandas_datareader import data as pdr
 import requests
 from configinfo import client_id
+from scipy.stats import norm
 
 macslash = '/'
 windowslash = r'\\'
@@ -223,8 +224,9 @@ def get_quotes(**kwargs):
 def get_lastPrice(**kwargs):
     data = get_quotes(symbol=kwargs.get('symbol'))
     for symbol in kwargs.get('symbol'):
-        print(symbol)
-        print(data[symbol]['lastPrice'])
+        #print(symbol)
+        #print(data[symbol]['lastPrice'])
+        return data[symbol]['lastPrice']
 
 
 # get latest EPS from EPS file
@@ -243,28 +245,59 @@ def get_latestEPS(ticker):
     #print(type(latestEPS))
     return latestEPS
 
+def get_historic_PE_mean(ticker):
+    merged_dir = subfolder_dir('Merged')
+
+    if sys.platform.startswith('win32'):
+        filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
+
+    data = pd.read_csv(filename)
+    data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
+    mean = np.mean(data['PE_ratio'])
+    print(mean)
+    return mean
+
+def get_historic_PE_std(ticker):
+    merged_dir = subfolder_dir('Merged')
+
+    if sys.platform.startswith('win32'):
+        filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
+
+    data = pd.read_csv(filename)
+    data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
+    std = np.std(data['PE_ratio'])
+    print(std)
+    return std
+
+
+def get_latest_PE(ticker):
+    latest_price = get_lastPrice(symbol=[ticker])
+    print(latest_price)
+    latest_earnings = get_latestEPS(ticker)
+    print(latest_earnings)
+    latest_PE = latest_price/latest_earnings
+    print(latest_PE)
+    return latest_PE
+
+
+
 
 def get_prob(ticker):
-    #create_folders_by_system()
-    #grab_OHLC_to_csv('AAPL')
-    #calc_Vol('AAPL')
-    #grab_historical_EPS('AAPL')
-    #merge_OHLC_EPS('AAPL')
-    #calc_PE('AAPL')
-    get_lastPrice(symbol=['AAPL'])
+    pass
+
+
+## STEPS
 #create_folders_by_system()
-#grab_OHLC_to_csv('AAPL')
-#calc_Vol('AAPL')
-#grab_historical_EPS('AAPL')
-#merge_OHLC_EPS('AAPL')
-#calc_PE('AAPL')
-get_lastPrice(symbol=['AAPL'])
-get_latestEPS('AAPL')
-
-
-
-# calculates current PE 
-# calculate the mean of PE
-# calculate the std of PE
-# from scipy.stats import norm
-## print(norm.cdf(x, mean, std))
+grab_OHLC_to_csv('HIMX')
+calc_Vol('HIMX')
+grab_historical_EPS('HIMX')
+merge_OHLC_EPS('HIMX')
+calc_PE('HIMX')
+get_latestEPS('HIMX')
+get_historic_PE_mean('HIMX')
+get_historic_PE_std('HIMX')
+get_latest_PE('HIMX')
