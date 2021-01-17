@@ -22,13 +22,19 @@
 
 
     <!-- ticker search form -->
-    <form action="/search/" method="post">
+    <!--
+    <form action="search" method="post">
         {% csrf_token %}
-        { form }}
-        <input type="submit" value="Submit">
+        {{ form }}
+        <input type="submit" value="{{ 'AAPL' }}">
     </form>
+    -->
 
-
+     <form action="search" method="post">
+        {% csrf_token %}
+        <input type="text" value="{{ ticker }}" name="ticker">
+        <input type="submit" value="okay">
+    </form>
 
 
 

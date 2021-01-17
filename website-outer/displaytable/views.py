@@ -23,10 +23,14 @@ def index(request):
 
 
 def get_ticker(request):
-	if request.method == 'POST':
-		form = TickerForm(request.POST)
-		if form.is_valid():
-			template = loader.get_template('displaytable/search.html')
-			context={"ticker": form} #gotta get the ticker from the form
-			
-			return HttpResponse(template.render(context, request))
+		if request.method == 'POST':
+			form = TickerForm(request.POST)
+			if True:
+				print(request.body.decode('UTF-8'))
+				body = request.body.decode('UTF-8')
+				template = loader.get_template('displaytable/search.html')
+				context=body['ticker'] #gotta get the ticker from the form
+				return HttpResponse(template.render(context, request))
+			#print(form.errors)
+			#return HttpResponse('test')
+
