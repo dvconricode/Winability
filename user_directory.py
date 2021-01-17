@@ -220,12 +220,14 @@ def get_quotes(**kwargs):
     
     return requests.get(url,params=params).json()
 
+
 ## method to get lastprice of stock
 def get_lastPrice(**kwargs):
     data = get_quotes(symbol=kwargs.get('symbol'))
     for symbol in kwargs.get('symbol'):
         #print(symbol)
         #print(data[symbol]['lastPrice'])
+
         return data[symbol]['lastPrice']
 
 
@@ -243,7 +245,9 @@ def get_latestEPS(ticker):
     latestEPS = float(latestEPS.replace('$', ''))
     #print(latestEPS)
     #print(type(latestEPS))
+
     return latestEPS
+
 
 def get_historic_PE_mean(ticker):
     merged_dir = subfolder_dir('Merged')
@@ -257,7 +261,9 @@ def get_historic_PE_mean(ticker):
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     mean = np.mean(data['PE_ratio'])
     print(mean)
+
     return mean
+
 
 def get_historic_PE_std(ticker):
     merged_dir = subfolder_dir('Merged')
@@ -271,6 +277,7 @@ def get_historic_PE_std(ticker):
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     std = np.std(data['PE_ratio'])
     print(std)
+
     return std
 
 
@@ -281,9 +288,8 @@ def get_latest_PE(ticker):
     print(latest_earnings)
     latest_PE = latest_price/latest_earnings
     print(latest_PE)
+
     return latest_PE
-
-
 
 
 def get_prob(ticker):
