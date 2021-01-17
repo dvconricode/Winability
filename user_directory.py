@@ -6,7 +6,8 @@ import numpy as np
 import pandas as pd
 from datetime import date
 from pandas_datareader import data as pdr
-
+import requests
+from configinfo import client_id
 
 macslash = '/'
 windowslash = r'\\'
@@ -191,7 +192,10 @@ def calc_PE(ticker):
         filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
 
     file = pd.read_csv(filename)                                                        # get the file
-    file['EPS'] = file['EPS'].str.replace('$', '')
+    if file['EPS'].dtypes != np.float:
+        file['EPS'] = file['EPS'].str.replace('$', '')
+    else:
+        pass
     file['EPS'] = file.EPS.astype(float)
     file['PE_ratio'] = file['Adj Close']/file['EPS']
     file.to_csv(filename, index=False)                                                 # replacing the previous file.
@@ -199,7 +203,37 @@ def calc_PE(ticker):
     return file
 
 
-create_folders_by_system()
-grab_OHLC_to_csv('AAPL')
-calc_Vol('AAPL')
+# TDAmeritrade API 
+def get_quotes(**kwargs):
+    
+    url = 'https://api.tdameritrade.com/v1/marketdata/quotes'
+    
+    params = {}
+    params.update({'apikey':client_id})
+    
+    symbol_list = []
+    
+    for symbol in kwargs.get('symbol'):
+        symbol_list.append(symbol)
+    params.update({'symbol' : symbol_list})
+    
+    return requests.get(url,params=params).json()
 
+## method to get lastprice of stock
+def get_lastPrice(**kwargs):
+    data = get_quotes(symbol=kwargs.get('symbol'))
+    for symbol in kwargs.get('symbol'):
+        print(symbol)
+        print(data[symbol]['lastPrice'])
+
+
+
+
+
+#create_folders_by_system()
+#grab_OHLC_to_csv('AAPL')
+#calc_Vol('AAPL')
+#grab_historical_EPS('AAPL')
+#merge_OHLC_EPS('AAPL')
+#calc_PE('AAPL')
+get_lastPrice(symbol=['AAPL'])
