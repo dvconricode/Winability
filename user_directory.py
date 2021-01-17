@@ -258,7 +258,7 @@ def get_historic_PE_mean(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     mean = np.mean(data['PE_ratio'])
-    #print(mean)
+    print("this is the mean: ")
 
     return mean
 
@@ -274,35 +274,46 @@ def get_historic_PE_std(ticker):
     data = pd.read_csv(filename)
     data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
     std = np.std(data['PE_ratio'])
-    #print(std)
+    print("this is the std: ")
 
     return std
 
 # calculates the latest PE by using the get_lastPrice() and get_latestEPS() functions
 def get_latest_PE(ticker):
     latest_price = get_lastPrice(symbol=[ticker])
-    #print(latest_price)
+    print("this is the latest price: " + str(latest_price))
     latest_earnings = get_latestEPS(ticker)
-    #print(latest_earnings)
+    print("this is the latest earning: " + str(latest_earnings))
     latest_PE = latest_price/latest_earnings
-    #print(latest_PE)
+    print("this is the latest PE: " + str(latest_PE))
 
     return latest_PE
 
 # utilizes get_historic_PE_mean(), get_historic_PE_std(), and get_latest_PE() functions to get required (x,mean,std)
 # run norm.cdf(x,mean,std) to get the cdf probability
-def get_prob(ticker):
-    historic_PE_mean = get_historic_PE_mean('HIMX')
+def get_prob_without_graph(ticker):
+    historic_PE_mean = get_historic_PE_mean(ticker)
     print(historic_PE_mean)
-    historic_PE_std = get_historic_PE_std('HIMX')
+    historic_PE_std = get_historic_PE_std(ticker)
     print(historic_PE_std)
-    latest_PE = get_latest_PE('HIMX')
-    print(latest_PE)
+    latest_PE = get_latest_PE(ticker)
+    #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
-    print(probability)
+    print("The probability of the trade is: " +str(probability))
 
     return probability
 
+def get_prob_with_graph(ticker):
+    historic_PE_mean = get_historic_PE_mean(ticker)
+    #print(historic_PE_mean)
+    historic_PE_std = get_historic_PE_std(ticker)
+    #print(historic_PE_std)
+    latest_PE = get_latest_PE(ticker)
+    #print(latest_PE)
+    probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
+    print("The probability of the trade is: " +str(probability))
+
+    return probability
 # running the following shows a normal distribution curve with the cdf of x shaded in
 def normal_distribution_curve(mean, std, x):
 
@@ -321,6 +332,37 @@ def normal_distribution_curve(mean, std, x):
     plt.ylabel('probability density')
     plt.show()
 
+# Debug purposes grab maximum historic PE
+def get_historic_PE_max(ticker):
+    merged_dir = subfolder_dir('Merged')
+
+    if sys.platform.startswith('win32'):
+        filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
+
+    data = pd.read_csv(filename)
+    data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
+    maxPE = np.max(data['PE_ratio'])
+    print(maxPE)
+    return maxPE
+
+# Debug purposes grab minimum historic PE
+def get_historic_PE_min(ticker):
+    merged_dir = subfolder_dir('Merged')
+
+    if sys.platform.startswith('win32'):
+        filename = merged_dir + '{}'.format(windowslash) + ticker + '_merged.csv'
+    elif sys.platform.startswith('darwin'):
+        filename = merged_dir + '{}'.format(macslash) + ticker + '_merged.csv'
+
+    data = pd.read_csv(filename)
+    data['PE_ratio'] = data['PE_ratio'].replace([np.inf, -np.inf, np.nan], 0)
+    minPE = np.min(data['PE_ratio'])
+    print(minPE)
+    return minPE
+
+
 # create all the necessary files as well as calculate important columns
 def setup_data(ticker):
     grab_OHLC_to_csv(ticker)
@@ -331,7 +373,18 @@ def setup_data(ticker):
     get_latestEPS(ticker)
 
 
-## Commands to Run
-create_folders_by_system()
-setup_data('HIMX')
-get_prob('HIMX')
+def initial_program_run():
+    #START WITH INITIALIZING FOLDERS
+    create_folders_by_system()
+    #CREATE FOR LOOP TO ITERATE OVER THE TICKERS
+    setup_data(ticker)
+    get_prob_without_graph(ticker)
+    #Save the results either in a list or strings 
+    ## things that are relevant 'ticker name','lastprice', 'probability'
+
+
+### Commands to Run
+#create_folders_by_system()
+#setup_data('AAPL')
+#get_prob_without_graph('AAPL')
+initial_program_run()
