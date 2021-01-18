@@ -1,6 +1,6 @@
 # HackDavis-2021
 
-This website is meant to show you which stocks are good long-term investments through their Price-Expenditure Ratios (PE Ratios) and normal distributions. 
+This website is meant to show you which stocks are good long-term investments through their Price-Earnings Ratios (PE Ratios) and normal distributions. 
 
 To test the Django webpage: 
 
