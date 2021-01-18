@@ -1,8 +1,8 @@
+import time
+starttime = time.time()
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-import time
-
 from .forms import TickerForm
 
 # Create your views here. 
@@ -19,7 +19,7 @@ from pandas_datareader import data as pdr
 import requests
 import math
 import matplotlib.pyplot as plt
-from configinfo import client_id
+from .configinfo import client_id
 from scipy.stats import norm
 
 macslash = '/'
@@ -454,6 +454,7 @@ def get_ticker(request):
 				my_search = context['ticker']  # the ticker we search for
 				print("###### SEARCHING FOR: "+my_search)
 				# get ticker info
+				setup_data(my_search)
 				website_price = get_lastPrice(symbol=[my_search])
 				prob_win2 = 100*(get_prob_without_graph(my_search))
 				prob_lose2 = 100 - prob_win2 
@@ -465,3 +466,8 @@ def get_ticker(request):
 			#print(form.errors)
 			#return HttpResponse('test')
 
+endtime = time.time()
+totaltime = endtime - starttime
+print("##########")
+print("###### Total time elapsed: "+str(totaltime)+" seconds")
+print("##########")
