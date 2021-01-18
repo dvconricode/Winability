@@ -301,9 +301,9 @@ def get_prob_without_graph(ticker):
     latest_PE = get_latest_PE(ticker)
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
-    print("The probability of the trade is: " +str(probability))
+    print("The probability of winning the trade is: " +str(1-probability))
 
-    return probability
+    return (1-probability)
 
 def get_prob_with_graph(ticker):
     historic_PE_mean = get_historic_PE_mean(ticker)
@@ -313,10 +313,10 @@ def get_prob_with_graph(ticker):
     latest_PE = get_latest_PE(ticker)
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
-    print("The probability of the trade is: " +str(probability))
+    print("The probability of winning the trade is: " +str(1-probability))
     normal_distribution_curve(historic_PE_mean,historic_PE_std,latest_PE)
 
-    return probability
+    return (1-probability)
 
 # running the following shows a normal distribution curve with the cdf of x shaded in
 def normal_distribution_curve(mean, std, x):
@@ -397,7 +397,7 @@ def initial_program_run():
 
 ### Commands to Run
 #create_folders_by_system()
-setup_data('EGOV')
+setup_data('HIMX')
 #get_prob_without_graph('AAPL')
 #initial_program_run()
-get_prob_with_graph('EGOV')
+get_prob_with_graph('HIMX')
