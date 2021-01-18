@@ -1,4 +1,4 @@
-# HackDavis-2021
+# Winability
 
 This website is meant to show you which stocks are good long-term investments through their Price-Earnings Ratios (PE Ratios) and normal distributions. 
 
