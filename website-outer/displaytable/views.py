@@ -311,9 +311,9 @@ def get_prob_without_graph(ticker):
     latest_PE = get_latest_PE(ticker)
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
-    print("The probability of the trade is: " +str(probability))
+    print("The probability of winning the trade is: " +str(1-probability))
 
-    return probability
+    return 1-probability
 
 def get_prob_with_graph(ticker):
     historic_PE_mean = get_historic_PE_mean(ticker)
@@ -323,10 +323,10 @@ def get_prob_with_graph(ticker):
     latest_PE = get_latest_PE(ticker)
     #print(latest_PE)
     probability = norm.cdf(latest_PE, historic_PE_mean, historic_PE_std)
-    print("The probability of the trade is: " +str(probability))
+    print("The probability of winning the trade is: " +str(1-probability))
     normal_distribution_curve(historic_PE_mean,historic_PE_std,latest_PE)
 
-    return probability
+    return 1-probability
 
 # running the following shows a normal distribution curve with the cdf of x shaded in
 def normal_distribution_curve(mean, std, x):
@@ -406,16 +406,19 @@ def initial_program_run():
     return ticker_list
 
 ### Commands to Run
-#create_folders_by_system()
+create_folders_by_system()
 # setup_data('EGOV')
 #get_prob_without_graph('AAPL')
-#initial_program_run()
+# initial_program_run()
 # get_prob_with_graph('EGOV')
 ########################################################
 
 ticker_list = ["HIMX","CSGS","MEI","VRTU","PRFT","SMCI","SYKE","EGOV","SIMO","SPNS"]  # CAN BE WHATEVER
 for ticker2 in ticker_list:
 	setup_data(ticker2)
+
+def sortFunc(e):
+	return e[2]
 
 def index(request):
 	# DEBUG return HttpResponse("Index page <p>{% print(1) %}</p>")
@@ -430,7 +433,9 @@ def index(request):
 		prob_win = str(prob_win)[:6]
 		prob_lose = str(prob_lose)[:6]
 		ticker_data.append([just_ticker, website_price, prob_win, prob_lose])
-
+	ticker_data.sort(reverse=True, key=sortFunc)  # sort by stock quality
+	middleIndex = len(ticker_data)/2
+	ticker_data = ticker_data[:int(middleIndex)]
 	timetemp = time.asctime(time.localtime())  # updates every refresh
 	other_data = [timetemp]
 
@@ -450,8 +455,8 @@ def get_ticker(request):
 				print("###### SEARCHING FOR: "+my_search)
 				# get ticker info
 				website_price = get_lastPrice(symbol=[my_search])
-				prob_win2 = 100*(get_prob(my_search))
-				prob_lose2 = 100 - prob_win2
+				prob_win2 = 100*(get_prob_without_graph(my_search))
+				prob_lose2 = 100 - prob_win2 
 				prob_win2 = str(prob_win2)[:6]
 				prob_lose2 = str(prob_lose2)[:6]
 				results_list = [my_search, website_price, prob_win2, prob_lose2]
