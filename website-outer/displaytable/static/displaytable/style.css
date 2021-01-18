@@ -14,7 +14,7 @@ html{
     max-width: 600px;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
-    grid-template-rows: 100px 100px 100px 100px;
+    grid-auto-rows: 100px;
 }
 
 .center{
@@ -61,13 +61,4 @@ body{
 .bottom {
     position: fixed;
     bottom: 0;
-}
-
-.search {
-	padding-top: 20px;
-}
-
-input[type=text] {
-	border: 2px green;
-	border-radius: 4px;
 }
