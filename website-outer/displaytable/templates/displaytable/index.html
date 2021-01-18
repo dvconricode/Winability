@@ -18,6 +18,14 @@
                 <div class="container why" style="place-self: center;">
                     <h1>Market Watch</h1>
                 </div>
+
+                <div class="container why search" style="place-self: center; margin-top: 180px;">
+                     <form action="search" method="post">
+                        {% csrf_token %}
+                        <input type="text" value="{{ ticker }}" name="ticker">
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
     </div>
 
 
@@ -29,13 +37,7 @@
         <input type="submit" value="{{ 'AAPL' }}">
     </form>
     -->
-    <div class="container why search" style="place-self: center; margin-top: 180px;">
-         <form action="search" method="post">
-            {% csrf_token %}
-            <input type="text" value="{{ ticker }}" name="ticker">
-            <input type="submit" value="Search">
-        </form>
-    </div>
+
 
 
 

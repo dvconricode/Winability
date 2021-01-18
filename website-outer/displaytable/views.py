@@ -19,7 +19,7 @@ from pandas_datareader import data as pdr
 import requests
 import math
 import matplotlib.pyplot as plt
-from .configinfo import client_id
+from configinfo import client_id
 from scipy.stats import norm
 
 macslash = '/'
