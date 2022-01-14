@@ -14,4 +14,4 @@ On the home page you will see a couple of our pre-selected stocks ordered by the
 
 
 
-This project was built by Dominic Conricode, Richard Ge, Jasper Tsai, and Shu Mien for HackDavis 2021 over a period of 36 hours.
+This project was built by Dominic Conricode, Richard Ge, Jasper Tsai, and Love Chien for HackDavis 2021 over a period of 36 hours.
